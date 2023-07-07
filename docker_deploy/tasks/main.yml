@@ -1,0 +1,9 @@
+---
+- name: Deploying the container
+  community.docker.docker_container:
+    name: "{{container_name}}" 
+    image: "{{image_name}}"
+    published_ports: "{{public_ports}}"
+  become: true
+
+# tasks file for docker_deploy
