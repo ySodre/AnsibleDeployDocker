@@ -1,7 +1,7 @@
 # Projeto - Instalação de deploys de containers utilizando Ansible e Docker
 
-O objetivo desse projeto é criar uma role para instalação do docker e outra para fazer deploys das imagens.
-Para tornar a role de deploys reutilizável criei algumas váriaveis para serem utilizadas na hora de execução da imagem do container.
+O objetivo desse projeto é criar uma role para instalação do docker e outra para fazer deploy das imagens.
+Para tornar a role de deploy reutilizável criei algumas váriaveis para serem utilizadas na hora de execução da role deploy_docker.
 
 ## Conhecimentos utilizados
   <ul>
@@ -9,7 +9,7 @@ Para tornar a role de deploys reutilizável criei algumas váriaveis para serem 
     <li>Estrutura de arquivos Ansible</li>
     <li>Código reutilizável</li>
     <li>Docker</li>
-    <li>Container/li>
+    <li>Container</li>
   </ul>
 
 ## Váriaveis
@@ -38,3 +38,4 @@ Existem dois playbooks, o install_docker para instalação do serviço e o deplo
 
 ![image](https://github.com/ySodre/AnsibleDeployDocker/assets/89286829/92668f96-aabb-4b65-8b93-646825528f3d)
 
+![image](https://github.com/ySodre/AnsibleDeployDocker/assets/89286829/3be5c0fc-de68-4e87-a030-ca84329dcc6c)
