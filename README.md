@@ -12,70 +12,29 @@ Para tornar a role de deploys reutilizável criei algumas váriaveis para serem 
     <li>Container/li>
   </ul>
 
-## Configuração
+## Váriaveis
 
-1 - Utilizei o vagrant para provisionar as instâncias do projeto: controle (ansible), web e db.
-
-2 - Configuração da máquina controle
+É necessário setar as seguintes váriaveis na hora de executar a role deploy_docker.
 
   <ul>
-    <li>#apt update -y</li>
-    <li>#apt install git -y</li>
-    <li>#apt install ansible -y </li>
-    <li>#cd /opt</li>
-    <li>#mkdir expressapp</li>
-    <li>#cd expressapp</li>
-    <li>#git clone <strong>https://github.com/ySodre/ansible-expressapp.git</strong></li>
-    <li>#cd ansible-expressapp</li>
+    <li>container_name</li>
+    <li>image_name</li>
+    <li>public_ports </li>
  </ul>
 
-3 - Gerar par de chaves para os servidor WEB e DB e importar para os servidores, por padrão o usuário e senha das máquinas provisionadas pelo vagrant é: vagrant.
+## Execução
 
-  <ul>
-    <li>#ssh-keygen</li>
-    <li>#ssh-copy-id vagrant@ip_db</li>
-    <li>#ssh-copy-id vagrant@ip_web</li>
-  </ul>
-4 - Editar o arquivo hosts dentro do diretorio do ansible_expressapp, alterando o IP dos servidores e o caminho da sua chave privada gerada.
+É necessário ajustar o arquivo host, colocando o IP e o método de autenticação. Eu recomendo utilizar o sistema de par de chaves publica e privada
 
-## Testar comunicação com os servidores
+Existem dois playbooks, o install_docker para instalação do serviço e o deploy_docker que é utilizado para fazer o deploy de uma imagem docker.
 
-  <ul>
-    <li>#<strong>ansible -i hosts all -m ping</li>
-  </ul>
-      
-  Você deverá ver o seguinte retorno.
-      
-  ![image](https://github.com/ySodre/ansible-expressapp/assets/89286829/ac0f7557-a632-4f28-bb58-0cb430fb397c)
+### Exemplos
 
-## Executar o playbook implementação
+#ansible-playbook -i hosts install_docker.yml
 
-Nesse projeto existe apenas uma váriável de ambiente que é o IP do banco de dados então no momento da execução é necessário passar a váriavel informando qual o IP do servidor de banco de dados.
+![image](https://github.com/ySodre/AnsibleDeployDocker/assets/89286829/84ec7cb5-91e4-4630-99d2-5cf3bf5cb7df)
 
-  <ul>
-    <li>#ansible-playbook -i hosts -e "db_ip=ip_db" playbook.yml </li>
-  </ul>
+#ansible-playbook -i hosts -e "container_name=simple_web image_name=yeasy/simple-web:latest public_ports=8080:80" deploy_docker.yml
 
-Ao finalizar você deverá ver o resultado das tarefas sem erros
+![image](https://github.com/ySodre/AnsibleDeployDocker/assets/89286829/92668f96-aabb-4b65-8b93-646825528f3d)
 
-![image](https://github.com/ySodre/ansible-expressapp/assets/89286829/b0d45ff6-cd68-48fd-86a3-6e4eb3ac8ada)
-
-## Configuração DNS
-
-Como estamos trabalhando com IPs privados, será necessário editar o arquivo hosts da sua máquina e criar o apontamento necessário.
-
-Exemplo em windows. Caminho: C:\Windows\System32\drivers\etc\hosts
-
-![image](https://github.com/ySodre/ansible-expressapp/assets/89286829/925eb3f2-a15a-4452-8abc-4d9f9f0ad964)
-
-Exemplo em Linux. Caminho /etc/hosts
-
-![image](https://github.com/ySodre/ansible-expressapp/assets/89286829/d1124001-5bb0-4491-9f72-a42c7c9db640)
-
-## Resultado
-
-O resultado esperado é que ao digitar express.asf.com abra o website da aplicação e além disso na guia de backups precisa aparecer dois backups, validando a comunicação com o banco de dados.
-
-![image](https://github.com/ySodre/ansible-expressapp/assets/89286829/2a4ef44b-240f-4862-8c9c-9cc35e454de3)
-
-![image](https://github.com/ySodre/ansible-expressapp/assets/89286829/2dc13b09-1509-4099-b3d8-e09b18dd02a9)
